@@ -427,7 +427,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function shouldComponentUpdate(nextProps) {
 	            var _this2 = this;
 
-	            return nextProps.width != this.props.width || nextProps.height != this.props.height || nextProps.margin != this.props.margin || nextProps.min != this.props.min || nextProps.max != this.props.max || nextProps.limit != this.props.limit || nextProps.data.length != this.props.data.length || nextProps.data.some(function (d, i) {
+	            return nextProps.width != this.props.width || nextProps.height != this.props.height || nextProps.svgWidth != this.props.svgWidth || nextProps.svgHeight != this.props.svgHeight || nextProps.preserveAspectRatio != this.props.preserveAspectRatio || nextProps.margin != this.props.margin || nextProps.min != this.props.min || nextProps.max != this.props.max || nextProps.limit != this.props.limit || nextProps.data.length != this.props.data.length || nextProps.data.some(function (d, i) {
 	                return !Object.is(d, _this2.props.data[i]);
 	            });
 	        }
@@ -439,6 +439,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var limit = _props.limit;
 	            var width = _props.width;
 	            var height = _props.height;
+	            var svgWidth = _props.svgWidth;
+	            var svgHeight = _props.svgHeight;
+	            var preserveAspectRatio = _props.preserveAspectRatio;
 	            var margin = _props.margin;
 	            var style = _props.style;
 	            var max = _props.max;
@@ -449,9 +452,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var points = _DataProcessor2.default.dataToPoints(data, limit, width, height, margin, max, min);
 
+	            var svgOpts = { style: style, viewBox: '0 0 ' + width + ' ' + height, preserveAspectRatio: preserveAspectRatio };
+	            if (svgWidth > 0) svgOpts.width = svgWidth;
+	            if (svgHeight > 0) svgOpts.height = svgHeight;
+
 	            return _react2.default.createElement(
 	                'svg',
-	                { width: width, height: height, style: style, viewBox: '0 0 ' + width + ' ' + height },
+	                svgOpts,
 	                _react2.default.Children.map(this.props.children, function (child) {
 	                    return _react2.default.cloneElement(child, { points: points, width: width, height: height, margin: margin });
 	                })
@@ -467,6 +474,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    limit: _react2.default.PropTypes.number,
 	    width: _react2.default.PropTypes.number,
 	    height: _react2.default.PropTypes.number,
+	    svgWidth: _react2.default.PropTypes.number,
+	    svgHeight: _react2.default.PropTypes.number,
+	    preserveAspectRatio: _react2.default.PropTypes.string,
 	    margin: _react2.default.PropTypes.number,
 	    style: _react2.default.PropTypes.object,
 	    min: _react2.default.PropTypes.number,
@@ -476,6 +486,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    data: [],
 	    width: 240,
 	    height: 60,
+	    //Scale the graphic content of the given element non-uniformly if necessary such that the element's bounding box exactly matches the viewport rectangle.
+	    preserveAspectRatio: 'none', //https://www.w3.org/TR/SVG/coords.html#PreserveAspectRatioAttribute
 	    margin: 2
 	};
 	exports.Sparklines = Sparklines;
