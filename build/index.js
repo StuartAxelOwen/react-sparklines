@@ -81,12 +81,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var width = arguments.length <= 2 || arguments[2] === undefined ? 1 : arguments[2];
 	            var height = arguments.length <= 3 || arguments[3] === undefined ? 1 : arguments[3];
 	            var margin = arguments.length <= 4 || arguments[4] === undefined ? 0 : arguments[4];
-	            var max = arguments.length <= 5 || arguments[5] === undefined ? this.max(data) : arguments[5];
 
 	            var _this = this;
 
+	            var max = arguments.length <= 5 || arguments[5] === undefined ? this.max(data) : arguments[5];
 	            var min = arguments.length <= 6 || arguments[6] === undefined ? this.min(data) : arguments[6];
-	            var leaveGaps = arguments.length <= 7 || arguments[7] === undefined ? false : arguments[7];
 
 
 	            var len = data.length;
@@ -101,7 +100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return data.map(function (d, i) {
 	                return {
 	                    x: i * hfactor + margin,
-	                    y: leaveGaps && _this.isGapValue(d) ? d : (max === min ? 1 : max - d) * vfactor + margin
+	                    y: _this.isGapValue(d) ? d : (max === min ? 1 : max - d) * vfactor + margin
 	                };
 	            });
 	        }
@@ -444,12 +443,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var style = _props.style;
 	            var max = _props.max;
 	            var min = _props.min;
-	            var gaps = _props.gaps;
 
 
 	            if (data.length === 0) return null;
 
-	            var points = _DataProcessor2.default.dataToPoints(data, limit, width, height, margin, max, min, gaps);
+	            var points = _DataProcessor2.default.dataToPoints(data, limit, width, height, margin, max, min);
 
 	            return _react2.default.createElement(
 	                'svg',
@@ -472,8 +470,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    margin: _react2.default.PropTypes.number,
 	    style: _react2.default.PropTypes.object,
 	    min: _react2.default.PropTypes.number,
-	    max: _react2.default.PropTypes.number,
-	    gaps: _react2.default.PropTypes.bool
+	    max: _react2.default.PropTypes.number
 	};
 	Sparklines.defaultProps = {
 	    data: [],
